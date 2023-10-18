@@ -29,6 +29,8 @@ export function MTableHeader({
     () => columns.filter((c) => c.hidden !== true),
     [columns]
   );
+  const renderDropdown =
+    props.renderDropdown || (() => React.createElement('div', null));
 
   const handleMouseDown = (e, columnDef, colIndex) => {
     const startX = e.clientX;
@@ -277,20 +279,23 @@ export function MTableHeader({
           props.allowSorting
         ) {
           content = (
-            <RenderSortButton
-              columnDef={columnDef}
-              keepSortDirectionOnColumnSwitch={
-                options.keepSortDirectionOnColumnSwitch
-              }
-              icon={icons.SortArrow}
-              thirdSortClick={options.thirdSortClick}
-              onOrderChange={props.onOrderChange}
-              orderByCollection={props.orderByCollection}
-              showColumnSortOrder={options.showColumnSortOrder}
-              sortOrderIndicatorStyle={options.sortOrderIndicatorStyle}
-            >
-              {columnDef.title}
-            </RenderSortButton>
+            <>
+              <RenderSortButton
+                columnDef={columnDef}
+                keepSortDirectionOnColumnSwitch={
+                  options.keepSortDirectionOnColumnSwitch
+                }
+                icon={icons.SortArrow}
+                thirdSortClick={options.thirdSortClick}
+                onOrderChange={props.onOrderChange}
+                orderByCollection={props.orderByCollection}
+                showColumnSortOrder={options.showColumnSortOrder}
+                sortOrderIndicatorStyle={options.sortOrderIndicatorStyle}
+                renderDropdown={renderDropdown}
+              >
+                {columnDef.title}
+              </RenderSortButton>
+            </>
           );
         }
         if (columnDef.tooltip) {
@@ -476,7 +481,8 @@ function RenderSortButton({
   children,
   orderByCollection,
   showColumnSortOrder,
-  sortOrderIndicatorStyle
+  sortOrderIndicatorStyle,
+  renderDropdown
 }) {
   const activeColumn = orderByCollection.find(
     ({ orderBy }) => orderBy === columnDef.tableData.id
@@ -532,6 +538,7 @@ function RenderSortButton({
       >
         {showColumnSortOrder && activeColumn ? activeColumn.sortOrder : ''}
       </span>
+      {renderDropdown()}
     </>
   );
 }
