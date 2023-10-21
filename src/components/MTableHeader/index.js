@@ -538,7 +538,7 @@ function RenderSortButton({
       >
         {showColumnSortOrder && activeColumn ? activeColumn.sortOrder : ''}
       </span>
-      {renderDropdown()}
+      {renderDropdown ? renderDropdown(columnDef) : <></>}
     </>
   );
 }

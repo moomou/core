@@ -21,6 +21,7 @@ function MTableBodyRow({ forwardedRef, ...props }) {
   const icons = useIconStore();
   const propsWithOptions = { ...props, options };
   const {
+    renderOffTableAction,
     data,
     components,
     detailPanel,
@@ -174,6 +175,7 @@ function MTableBodyRow({ forwardedRef, ...props }) {
       ) || 0;
 
     const styles = size !== 'medium' ? { padding: '4px' } : undefined;
+    const overrideSelection = options.overrideSelection;
 
     return (
       <TableCell
@@ -182,17 +184,21 @@ function MTableBodyRow({ forwardedRef, ...props }) {
         key="key-selection-column"
         style={{ width: selectionWidth }}
       >
-        <Checkbox
-          size={size}
-          checked={props.data.tableData.checked === true}
-          onClick={(e) => e.stopPropagation()}
-          value={props.data.tableData.id.toString()}
-          onChange={(event) => {
-            props.onRowSelected(event, props.path, props.data);
-          }}
-          style={styles}
-          {...checkboxProps}
-        />
+        {overrideSelection ? (
+          overrideSelection(props.data, styles)
+        ) : (
+          <Checkbox
+            size={size}
+            checked={props.data.tableData.checked === true}
+            onClick={(e) => e.stopPropagation()}
+            value={props.data.tableData.id.toString()}
+            onChange={(event) => {
+              props.onRowSelected(event, props.path, props.data);
+            }}
+            style={styles}
+            {...checkboxProps}
+          />
+        )}
       </TableCell>
     );
   };
