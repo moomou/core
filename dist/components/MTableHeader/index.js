@@ -717,8 +717,10 @@ function RenderSortButton(_ref2) {
   }
   var orderBy = activeColumn && activeColumn.orderBy;
   return /*#__PURE__*/ _react['default'].createElement(
-    _react['default'].Fragment,
-    null,
+    'div',
+    {
+      className: 'float-left'
+    },
     /*#__PURE__*/ _react['default'].createElement(
       _TableSortLabel['default'],
       {

@@ -506,7 +506,7 @@ function RenderSortButton({
   const orderBy = activeColumn && activeColumn.orderBy;
 
   return (
-    <>
+    <div className="float-left">
       <TableSortLabel
         role="columnheader"
         aria-sort={ariaSort}
@@ -539,7 +539,7 @@ function RenderSortButton({
         {showColumnSortOrder && activeColumn ? activeColumn.sortOrder : ''}
       </span>
       {renderDropdown ? renderDropdown(columnDef) : <></>}
-    </>
+    </div>
   );
 }
 
